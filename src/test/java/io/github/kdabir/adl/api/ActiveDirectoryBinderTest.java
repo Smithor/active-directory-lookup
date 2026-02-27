@@ -6,9 +6,9 @@ import io.github.kdabir.adl.util.ActiveDirectoryEnvironmentProvider;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.Matchers;
+import org.mockito.ArgumentMatchers;
 import org.mockito.Mock;
-import org.mockito.runners.MockitoJUnitRunner;
+import org.mockito.junit.MockitoJUnitRunner;
 
 import javax.naming.AuthenticationException;
 import javax.naming.CommunicationException;
@@ -52,7 +52,7 @@ public class ActiveDirectoryBinderTest {
     @Test
     public void shouldWrapNamingException() throws Exception {
         final NamingException namingException = new NamingException();
-        when(ldapContextFactoryMock.getLdapContext(Matchers.<Hashtable<String, String>>any())).thenThrow(namingException);
+        when(ldapContextFactoryMock.getLdapContext(ArgumentMatchers.<Hashtable<String, String>>any())).thenThrow(namingException);
 
         try {
             binder.getLdapContext("a", "b", "c", "d");
@@ -64,7 +64,7 @@ public class ActiveDirectoryBinderTest {
     @Test
     public void shouldWrapCommunicationException() throws Exception {
         final CommunicationException communicationException = new CommunicationException();
-        when(ldapContextFactoryMock.getLdapContext(Matchers.<Hashtable<String, String>>any())).thenThrow(communicationException);
+        when(ldapContextFactoryMock.getLdapContext(ArgumentMatchers.<Hashtable<String, String>>any())).thenThrow(communicationException);
 
         try {
             binder.getLdapContext("a", "b", "c", "d");
@@ -76,7 +76,7 @@ public class ActiveDirectoryBinderTest {
     @Test
     public void shouldThrowBadCredentialsExceptionWithWrappedAuthenticationException() throws Exception {
         final AuthenticationException authenticationException = new AuthenticationException();
-        when(ldapContextFactoryMock.getLdapContext(Matchers.<Hashtable<String, String>>any())).thenThrow(authenticationException);
+        when(ldapContextFactoryMock.getLdapContext(ArgumentMatchers.<Hashtable<String, String>>any())).thenThrow(authenticationException);
 
         try {
             binder.getLdapContext("a", "b", "c", "d");
