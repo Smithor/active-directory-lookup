@@ -1,11 +1,13 @@
 package io.github.kdabir.adl.api;
 
 import io.github.kdabir.adl.api.filters.UsernameFilter;
+import io.github.kdabir.adl.exceptions.ActiveDirectoryException;
 import io.github.kdabir.adl.exceptions.BadCredentialsException;
 import io.github.kdabir.adl.exceptions.NotFoundException;
 import io.github.kdabir.adl.util.ActiveDirectoryEnvironmentProvider;
 import io.github.kdabir.adl.util.SearchBaseGuesser;
 
+import javax.naming.NamingException;
 import javax.naming.ldap.LdapContext;
 import java.util.List;
 import java.util.Map;
@@ -59,9 +61,10 @@ public class ActiveDirectoryAuthenticator {
      * @return a <code>Map</code> populated with user details
      * @throws io.github.kdabir.adl.exceptions.BadCredentialsException when username password do not match
      * @throws io.github.kdabir.adl.exceptions.NotFoundException       if user auth succeeds but user info can not be found in AD.
+     * @throws ActiveDirectoryException If something else happens
      */
     public Map<String, String> authenticate(String username, String password)
-            throws BadCredentialsException, NotFoundException {
+			throws BadCredentialsException, NotFoundException, ActiveDirectoryException {
 
         LdapContext ldapContext = getDefaultActiveDirectoryBinder().getLdapContext(url, domain, username, password);
         final List<Map<String, String>> result = new SimpleActiveDirectorySearcher(ldapContext, searchBase)
@@ -87,7 +90,7 @@ public class ActiveDirectoryAuthenticator {
      * @param password
      * @return true if username/password match otherwise false
      */
-    public boolean isValid(String username, String password) {
+    public boolean isValid(String username, String password) throws ActiveDirectoryException {
         try {
             getDefaultActiveDirectoryBinder().getLdapContext(url, domain, username, password);
             return true;

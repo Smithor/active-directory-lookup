@@ -4,6 +4,7 @@ import io.github.kdabir.adl.api.filters.SearchFilter;
 import io.github.kdabir.adl.api.mapper.DefaultSearchResultMapper;
 import io.github.kdabir.adl.api.mapper.SearchResultMapper;
 import io.github.kdabir.adl.exceptions.ActiveDirectoryException;
+import io.github.kdabir.adl.exceptions.BadCredentialsException;
 
 import javax.naming.NamingException;
 import javax.naming.directory.SearchControls;
@@ -61,11 +62,14 @@ public class ActiveDirectorySearcher<T> {
      * @return
      * @throws io.github.kdabir.adl.exceptions.ActiveDirectoryException is something goes wrong
      */
-    public List<T> search(SearchFilter searchFilter) {
+    public List<T> search(SearchFilter searchFilter) throws ActiveDirectoryException {
         try {
             return searchResultMapper.mapResult(
                             ldapContext.search(searchBase, searchFilter.getFilter(), getSearchControls()));
         } catch (NamingException ex) {
+            if (ex.getMessage().contains("LDAP: error code 1 - 000004DC")) {
+                throw new BadCredentialsException("Bad credentials", ex);
+            }
             throw new ActiveDirectoryException("Exception while searching Active Directory", ex);
         }
     }
@@ -83,7 +87,7 @@ public class ActiveDirectorySearcher<T> {
     /**
      * to clean up
      */
-    public void close() {
+    public void close() throws ActiveDirectoryException {
         if (ldapContext != null) {
             try {
                 ldapContext.close();

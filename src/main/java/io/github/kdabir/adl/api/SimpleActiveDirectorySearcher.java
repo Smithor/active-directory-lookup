@@ -2,6 +2,7 @@ package io.github.kdabir.adl.api;
 
 import io.github.kdabir.adl.api.filters.UsernameFilter;
 import io.github.kdabir.adl.api.mapper.DefaultSearchResultMapper;
+import io.github.kdabir.adl.exceptions.ActiveDirectoryException;
 import io.github.kdabir.adl.util.ActiveDirectoryEnvironmentProvider;
 
 import javax.naming.NamingException;
@@ -37,7 +38,7 @@ public class SimpleActiveDirectorySearcher extends ActiveDirectorySearcher<Map<S
      * @param username to be searched
      * @return List of results
      */
-    public List<Map<String,String>> searchByUsername(String username) {
+    public List<Map<String,String>> searchByUsername(String username) throws ActiveDirectoryException {
         return this.search(new UsernameFilter(username));
     }
 

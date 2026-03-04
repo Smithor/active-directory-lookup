@@ -31,16 +31,12 @@ public class ActiveDirectoryBinder {
      * @return LdapContext
      *
      */
-    public LdapContext getLdapContext(String url, String domain, String username, String password) {
+    public LdapContext getLdapContext(String url, String domain, String username, String password) throws BadCredentialsException {
         Hashtable<String, String> environment = activeDirectoryEnvironmentProvider.getActiveDirectoryEnvironment(url, domain, username, password);
         try {
             return ldapContextFactory.getLdapContext(environment);
-        } catch (AuthenticationException ex) {
-            throw new BadCredentialsException(ex);
-        } catch (CommunicationException ex) {
-            throw new ActiveDirectoryException(ex);
         } catch (NamingException ex) {
-            throw new ActiveDirectoryException(ex);
+            throw new BadCredentialsException(ex);
         }
     }
 }
