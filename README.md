@@ -1,4 +1,4 @@
-[![Java CI with Maven](https://github.com/Smithor/active-directory-lookup/actions/workflows/maven.yml/badge.svg)](https://github.com/Smithor/active-directory-lookup/actions/workflows/maven.yml) [![](https://jitpack.io/v/Smithor/active-directory-lookup.svg)](https://jitpack.io/#Smithor/active-directory-lookup/master-SNAPSHOT)
+[![Build](https://github.com/Smithor/active-directory-lookup/actions/workflows/build.yml/badge.svg)](https://github.com/Smithor/active-directory-lookup/actions/workflows/build.yml) [![](https://jitpack.io/v/Smithor/active-directory-lookup.svg)](https://jitpack.io/#Smithor/active-directory-lookup/master-SNAPSHOT)
 
 Active Directory Lookup
 =======================
