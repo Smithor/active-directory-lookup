@@ -1,3 +1,5 @@
+[![Java CI with Maven](https://github.com/Smithor/active-directory-lookup/actions/workflows/maven.yml/badge.svg)](https://github.com/Smithor/active-directory-lookup/actions/workflows/maven.yml) [![](https://jitpack.io/v/Smithor/active-directory-lookup.svg)](https://jitpack.io/#Smithor/active-directory-lookup/master-SNAPSHOT)
+
 Active Directory Lookup
 =======================
 
@@ -43,9 +45,6 @@ LdapContext ldapContext = ActiveDirectoryAuthenticator
 
 The built library can be consumed directly from jitpack repo
 
-[![Release](https://jitpack.io/v/com.kdabir/active-directory-lookup.svg)](https://jitpack.io/#com.kdabir/active-directory-lookup)
-
-
 ### Using Gradle
 
 Add this at the top of build.gradle
@@ -61,7 +60,7 @@ Add/merge the dependency in the `dependencies` section
 
 ```groovy
 dependencies {
-    implementation "com.kdabir:active-directory-lookup:1.0.2" 
+    implementation "com.github.Smithor:active-directory-lookup:master-SNAPSHOT" 
 }
 ```
 
@@ -82,9 +81,9 @@ Add this to the `dependencies` section within `pom.xml`
 
 ```xml
 <dependency>
-    <groupId>com.kdabir</groupId>
+    <groupId>com.github.Smithor</groupId>
     <artifactId>active-directory-lookup</artifactId>
-    <version>1.0.2</version>
+    <version>master-SNAPSHOT</version>
 </dependency>
 ```
 
@@ -100,27 +99,7 @@ details. The key methods to look out for are:
 
 ## Building Locally
 
-The project is built and packaged using Gradle.
-
-### Unit Testing
-
-`gradle test`
-
-Unit tests do not depend on any Active Directory instance and hence can be run without any configuration whatsoever.
-
-### Integration Testing
-
-`gradle integrationTests`
-
-You need to set the `adl.properties` in the root of the project with the right configuration set in order to run Integration
-Tests.
-
-### Installing to local Maven repo
-
-`gradle publishToMavenLocal`
-
-This make's the jar available in you local maven repository for usage.
-
+The project is built and packaged using Maven.
 
 ## References :
 
