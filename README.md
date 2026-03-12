@@ -1,5 +1,33 @@
 [![Build](https://github.com/Smithor/active-directory-lookup/actions/workflows/build.yml/badge.svg?branch=master)](https://github.com/Smithor/active-directory-lookup/actions/workflows/build.yml) [![](https://jitpack.io/v/Smithor/active-directory-lookup.svg)](https://jitpack.io/#Smithor/active-directory-lookup/master-SNAPSHOT)
 
+# Archive Notice
+
+When I forked this library, this was the best I could find, but it had a good number of problems that needed to be solved. 
+Some were easy, like the exceptions, but when it got to the search system, the built in one merely handles everything as a 
+string. If you try to do anything meta like grab the oid of a user, it will be absolutely useless to you. It wasn't worth 
+fixing, and then I found the Unbound [ldapsdk](https://github.com/pingidentity/ldapsdk), which with a little bit of reading, was basically just as easy. 
+
+The following code accomplishes the same thing as the ActiveDirectoryAuthenticator, but you have much more control.
+```java
+String user = username+"@"+domain;
+try (LDAPConnection connection = new LDAPConnection(domainController, 389, user, password)) {
+
+    WhoAmIExtendedResult result = (WhoAmIExtendedResult) connection.processExtendedOperation(new WhoAmIExtendedRequest());
+
+		Filter filter = Filter.createANDFilter(
+				Filter.create("objectClass=user"),
+				Filter.createEqualityFilter("sAMAccountName", username)
+		);
+
+		System.out.println(result.getAuthorizationID());
+		SearchRequest request = new SearchRequest(Util.baseDNFromDomain(domain), SearchScope.SUB, filter, ALL_OPERATIONAL_ATTRIBUTES, "*");
+	} catch (LDAPException e) {
+		throw new RuntimeException(e);
+	}
+```
+
+If I do end up needing more, I would just make a wrapper for ldapsdk instead.
+
 Active Directory Lookup
 =======================
 
